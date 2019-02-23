@@ -6,11 +6,11 @@ import upperFirst from 'lodash/upperFirst';
 import camelCase from 'lodash/camelCase';
 import 'nprogress/nprogress.css';
 import Vuelidate from 'vuelidate';
-import DateFilter from './filters/date';
+import DateFilter from './shared/filters/date';
 
 Vue.filter('date', DateFilter);
 
-Vue.use(Vuelidate); 
+Vue.use(Vuelidate);
 
 /* Global mixin example
 Mixins are little parts of reusable code that can be hooked into components. In short they help to encapsulate repeatable code. 

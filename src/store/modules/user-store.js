@@ -1,11 +1,15 @@
-export const namespaced = true;
-
-export const state = {
+const state = {
   user: {id: '123ab', name: 'Annie Wilkens'},
 };
 
-export const actions ={
+const actions = {
   log() {
     console.log(state.user);
   },
+};
+
+export default {
+  namespaced: true,
+  state,
+  actions,
 };

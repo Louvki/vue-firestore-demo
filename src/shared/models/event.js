@@ -1,7 +1,7 @@
 import store from '../../store/store';
 
 export default class Event {
-  constructor( ) {
+  constructor() {
     this.id = Math.floor(Math.random() * 1000000),
     this.user = store.state.user.user,
     this.category = '';

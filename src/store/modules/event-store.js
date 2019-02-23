@@ -1,15 +1,13 @@
 import EventDb from '../../db/EventDb';
 
-export const namespaced = true;
-
-export const state = {
+const state = {
   events: [],
   eventCount: 0,
   event: {},
   perPage: 3,
 };
 
-export const mutations= {
+const mutations = {
   SET_EVENTS(state, events) {
     state.events = events;
   },
@@ -24,30 +22,48 @@ export const mutations= {
   },
 };
 
-export const actions = {
+const actions = {
   setEvents({commit}, events) {
     commit('SET_EVENTS', events);
     commit('SET_EVENT_COUNT', events.length);
   },
   createEvent({commit, dispatch}, event) {
-    return EventDb.createEvent(event).then(() => {
-      commit('ADD_EVENT', event);
-      const notification = {type: 'success', message: 'Event added successfully!'};
-      dispatch('notification/add', notification, {root: true});
-    }).catch((e) => {
-      const notification = {type: 'error', message: 'Failed to add event: ' + e.message};
-      dispatch('notification/add', notification, {root: true});
-      throw e;
-    });
+    return EventDb.createEvent(event)
+        .then(() => {
+          const notification = {
+            type: 'success',
+            message: 'Event added successfully!',
+          };
+          dispatch('notification/add', notification, {root: true});
+        })
+        .catch((e) => {
+          const notification = {
+            type: 'error',
+            message: 'Failed to add event: ' + e.message,
+          };
+          dispatch('notification/add', notification, {root: true});
+          throw e;
+        });
   },
-  // fetchEventsPaginated({state}, {page}) {
-  //   console.log(state.events);
-  //   return state.events.slice(0, startAt);
-  // },
+  getEvent({getters}, eventId) {
+    return getters.getEventById(eventId);
+  },
 };
 
-export const getters = {
+const getters = {
   getEventById: (state) => (id) => {
     return state.events.find((e) => e.id === id);
   },
+  getEventsPaginated: (state) => (page) => {
+    const startAt = (page - 1) * state.perPage;
+    return state.events.slice(startAt, startAt + state.perPage);
+  },
+};
+
+export default {
+  namespaced: true,
+  state,
+  actions,
+  mutations,
+  getters,
 };

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <button v-on="$listeners" v-bind="$attrs" class="button" :class="buttonClass">
+        <button v-on="listeners" v-bind="$attrs" class="button" :class="buttonClass">
             <slot/>
         </button>
     </div>
@@ -12,6 +12,14 @@ export default {
   props: {
     buttonClass: {
       type: String,
+    },
+  },
+  computed: {
+    listeners() {
+      return {
+        ...this.$listeners,
+        input: (event) =>this.$emit('input', event.target.value),
+      };
     },
   },
 };

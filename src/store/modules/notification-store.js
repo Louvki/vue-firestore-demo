@@ -1,11 +1,9 @@
-export const namespaced = true;
-
-export const state = {
+const state = {
   notifications: [],
 };
 
 let nextId = 1;
-export const mutations = {
+const mutations = {
   PUSH(state, notification) {
     state.notifications.push({
       ...notification,
@@ -13,17 +11,24 @@ export const mutations = {
     });
   },
   DELETE(state, notificationToRemove) {
-    state.notifications = state.notifications.filter((x) => x.id !== notificationToRemove.id);
+    state.notifications = state.notifications.filter(
+        (x) => x.id !== notificationToRemove.id
+    );
   },
 };
 
-export const actions ={
+const actions = {
   add({commit}, notification) {
     commit('PUSH', notification);
   },
   remove({commit}, notificationToRemove) {
     commit('DELETE', notificationToRemove);
   },
-
 };
 
+export default {
+  namespaced: true,
+  state,
+  mutations,
+  actions,
+};

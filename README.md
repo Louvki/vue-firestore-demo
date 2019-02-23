@@ -1,4 +1,4 @@
-# vue-real-world-vue
+# vue-firestore-demo
 
 ## Project setup
 ```
